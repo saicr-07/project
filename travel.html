@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wanderlust Escapes - Travel & Tourism</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #333;
+      background-color: #f4f7f6;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #008080;
+    }
+
+    /* NAVIGATION (FLEXBOX + MEGA MENU) */
+    header {
+      background-color: #ffffff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #008080;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links a, .mega-btn {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a:hover, .mega-btn:hover {
+      color: #008080;
+    }
+
+    /* MEGA MENU STYLING */
+    .mega-menu-item {
+      position: relative;
+    }
+
+    .mega-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 450px;
+      background: #ffffff;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      padding: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      z-index: 1001;
+    }
+
+    .mega-menu-item:hover .mega-dropdown,
+    .mega-dropdown.active {
+      display: grid;
+    }
+
+    .mega-column h4 {
+      color: #008080;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 0.2rem;
+    }
+
+    .mega-column ul {
+      list-style: none;
+    }
+
+    .mega-column ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .mega-column ul li a {
+      font-weight: normal;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .mega-column ul li a:hover {
+      color: #ff7f50;
+    }
+
+    /* HAMBURGER TOGGLE */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 18px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      width: 100%;
+      height: 3px;
+      background-color: #333;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-login-nav {
+      background-color: #008080 !important;
+      color: white !important;
+      padding: 0.4rem 1rem !important;
+      border-radius: 4px;
+    }
+
+    .btn-login-nav:hover {
+      background-color: #006666 !important;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      background: #008080;
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* PACKAGES GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .card-body h3 {
+      color: #008080;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-price {
+      font-weight: bold;
+      color: #ff7f50;
+      margin-top: 0.5rem;
+    }
+
+    /* TABLE STYLING */
+    .table-container {
+      overflow-x: auto;
+      margin-bottom: 3rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #008080;
+      color: white;
+    }
+
+    /* ATTRACTIONS LIST */
+    .attraction-list {
+      background: white;
+      padding: 1.5rem 2.5rem;
+      border-radius: 8px;
+      margin-bottom: 3rem;
+    }
+
+    .attraction-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* GALLERY */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* FORM STYLING */
+    .form-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 0 auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #ff7f50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #e0663b;
+    }
+
+    /* MODAL STYLING */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background-color: #333;
+      color: white;
+      margin-top: 3rem;
+    }
+
+    /* RESPONSIVE DESIGN FOR MOBILE */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mega-dropdown {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        grid-template-columns: 1fr;
+        padding: 0.5rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="nav-container">
+      <div class="logo">Wanderlust Escapes</div>
+      
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#destinations">Destinations</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#itineraries">Itineraries</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        
+        <!-- MEGA MENU ITEM -->
+        <li class="mega-menu-item">
+          <button class="mega-btn" id="megaBtn">Contact Us ▾</button>
+          <div class="mega-dropdown" id="megaDropdown">
+            <div class="mega-column">
+              <h4>Direct Support</h4>
+              <ul>
+                <li><a href="#contact">Booking Inquiry</a></li>
+                <li><a href="#">📞 Customer Care</a></li>
+                <li><a href="#">✉️ Email Helpdesk</a></li>
+              </ul>
+            </div>
+            <div class="mega-column">
+              <h4>Global Offices</h4>
+              <ul>
+                <li><a href="#contact">📍 New York HQ</a></li>
+                <li><a href="#contact">📍 London Hub</a></li>
+                <li><a href="#contact">📍 Tokyo Desk</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <li><a href="#" class="btn-login-nav" id="loginBtn">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Explore the World With Us</h1>
+    <p>Discover amazing places at affordable package rates.</p>
+  </section>
+
+  <main class="container">
+
+    <section id="packages">
+      <h2 class="section-title">Popular Travel Packages</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=500" alt="Bali">
+          <div class="card-body">
+            <h3>Bali Tropical Retreat</h3>
+            <p>7 Days of luxury resorts, beach tours, and cultural temples.</p>
+            <div class="card-price">$1,200 / person</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=500" alt="Swiss Alps">
+          <div class="card-body">
+            <h3>Swiss Alps Adventure</h3>
+            <p>5 Days of scenic mountain hiking, skiing, and cabin stays.</p>
+            <div class="card-price">$1,800 / person</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=500" alt="Tokyo">
+          <div class="card-body">
+            <h3>Tokyo Cultural Tour</h3>
+            <p>6 Days exploring modern tech hubs, historic shrines, and cuisine.</p>
+            <div class="card-price">$1,500 / person</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="itineraries">
+      <h2 class="section-title">3-Day Itinerary for Bali Tropical Retreat</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Day</th>
+              <th>Morning Activity</th>
+              <th>Afternoon Activity</th>
+              <th>Evening Activity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Day 1</td>
+              <td>Airport Pickup & Hotel Check-in</td>
+              <td>Guided City Walking Tour</td>
+              <td>Welcome Dinner</td>
+            </tr>
+            <tr>
+              <td>Day 2</td>
+              <td>Historical Landmark Tour</td>
+              <td>Museum & Local Shopping</td>
+              <td>Cultural Dance Show</td>
+            </tr>
+            <tr>
+              <td>Day 3</td>
+              <td>Nature Trail Hike</td>
+              <td>Souvenir Market Visit</td>
+              <td>Departure Transfer</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="destinations">
+      <h2 class="section-title">Top Key Attractions</h2>
+      <ul class="attraction-list">
+        <li><strong>Historical Monuments:</strong> UNESCO World Heritage sites and ancient temples.</li>
+        <li><strong>Natural Wonders:</strong> Scenic mountain peaks, tropical beaches, and national parks.</li>
+        <li><strong>Local Experiences:</strong> Authentic street food tours, traditional crafts, and music.</li>
+      </ul>
+    </section>
+
+    <section id="gallery">
+      <h2 class="section-title">Photo Gallery</h2>
+      <div class="gallery-grid">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" alt="Beach">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400" alt="Mountains">
+        <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400" alt="Ocean">
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">Book Your Trip / Contact Us</h2>
+      <div class="form-container">
+        <form id="bookingForm" action="#" method="POST">
+          <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="packageSelect">Select Package:</label>
+            <select id="packageSelect" name="packageSelect" required>
+              <option value="">-- Choose a Destination --</option>
+              <option value="bali">Bali Tropical Retreat ($1,200)</option>
+              <option value="swiss">Swiss Alps Adventure ($1,800)</option>
+              <option value="tokyo">Tokyo Cultural Tour ($1,500)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="travelers">Number of Travelers:</label>
+            <input type="number" id="travelers" name="travelers" min="1" max="10" value="1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="comments">Special Requests:</label>
+            <textarea id="comments" name="comments" rows="4" placeholder="Any additional requirements..."></textarea>
+          </div>
+
+          <button type="submit" class="btn">Submit Booking Request</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h3 style="color:#008080; margin-bottom: 1rem;">User Login</h3>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPass">Password:</label>
+          <input type="password" id="loginPass" required>
+        </div>
+        <button type="submit" class="btn">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Wanderlust Escapes. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile Hamburger Menu Toggle
+    const hamburgerBtn = id('hamburgerBtn');
+    const navLinks = id('navLinks');
+
+    hamburgerBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Mega Menu Toggle for Touch Devices
+    const megaBtn = id('megaBtn');
+    const megaDropdown = id('megaDropdown');
+
+    megaBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      megaDropdown.classList.toggle('active');
+    });
+
+    document.addEventListener('click', () => {
+      megaDropdown.classList.remove('active');
+    });
+
+    // Login Modal Handlers
+    const loginModal = id('loginModal');
+    const loginBtn = id('loginBtn');
+    const closeModal = id('closeModal');
+
+    loginBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginModal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+      loginModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === loginModal) {
+        loginModal.style.display = 'none';
+      }
+    });
+
+    // Form Submissions
+    id('bookingForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = id('fullName').value;
+      const pkg = id('packageSelect').value;
+      alert(`Thank you, ${name}! Your booking request for the ${pkg.toUpperCase()} package has been received.`);
+      e.target.reset();
+    });
+
+    id('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = id('loginEmail').value;
+      alert(`Welcome back! Logged in as: ${email}`);
+      loginModal.style.display = 'none';
+      e.target.reset();
+    });
+
+    function id(elemId) {
+      return document.getElementById(elemId);
+    }
+  </script>
+
+</body>
+</html>
