@@ -1,646 +1,1291 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wanderlust Escapes - Travel & Tourism</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust Escapes - Travel & Tourism</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      color: #333;
-      background-color: #f4f7f6;
-      line-height: 1.6;
-    }
+    <!-- Custom compass + suitcase favicon drawn as inline SVG (no external file needed) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='none' stroke='%23008080' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><circle cx='50' cy='25' r='8'/><path d='M42 33 L58 33 L62 55 L38 55 Z'/><path d='M38 55 L30 80 M62 55 L70 80'/><path d='M58 45 L80 68'/><rect x='78' y='65' width='16' height='22' rx='3'/><circle cx='82' cy='89' r='2' fill='%23008080'/><circle cx='90' cy='89' r='2' fill='%23008080'/></g></svg>">
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
+    <style>
+      /* ===== GLOBAL RESET ===== */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      color: #008080;
-    }
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+        background-color: #f4f7f6;
+        line-height: 1.6;
+      }
 
-    /* NAVIGATION (FLEXBOX + MEGA MENU) */
-    header {
-      background-color: #ffffff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+      /* Centered content wrapper used by most sections */
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
 
-    .nav-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+      .section-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #008080;
+      }
 
-    .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #008080;
-    }
+      /* ===== NAVIGATION BAR (FLEXBOX + MEGA MENU) ===== */
+      header {
+        background-color: #ffffff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000; /* keep header above page content */
+      }
 
-    .nav-links {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .nav-links a, .mega-btn {
-      text-decoration: none;
-      color: #333;
-      font-weight: bold;
-      background: none;
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-      padding: 0.5rem 0;
-    }
-
-    .nav-links a:hover, .mega-btn:hover {
-      color: #008080;
-    }
-
-    /* MEGA MENU STYLING */
-    .mega-menu-item {
-      position: relative;
-    }
-
-    .mega-dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 450px;
-      background: #ffffff;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-      border-radius: 8px;
-      padding: 1.5rem;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      z-index: 1001;
-    }
-
-    .mega-menu-item:hover .mega-dropdown,
-    .mega-dropdown.active {
-      display: grid;
-    }
-
-    .mega-column h4 {
-      color: #008080;
-      margin-bottom: 0.5rem;
-      font-size: 0.95rem;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 0.2rem;
-    }
-
-    .mega-column ul {
-      list-style: none;
-    }
-
-    .mega-column ul li {
-      margin-bottom: 0.4rem;
-    }
-
-    .mega-column ul li a {
-      font-weight: normal;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .mega-column ul li a:hover {
-      color: #ff7f50;
-    }
-
-    /* HAMBURGER TOGGLE */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 25px;
-      height: 18px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-    }
-
-    .hamburger span {
-      width: 100%;
-      height: 3px;
-      background-color: #333;
-      border-radius: 2px;
-      transition: all 0.3s ease;
-    }
-
-    .btn-login-nav {
-      background-color: #008080 !important;
-      color: white !important;
-      padding: 0.4rem 1rem !important;
-      border-radius: 4px;
-    }
-
-    .btn-login-nav:hover {
-      background-color: #006666 !important;
-    }
-
-    /* HERO SECTION */
-    .hero {
-      background: #008080;
-      color: white;
-      text-align: center;
-      padding: 4rem 1rem;
-    }
-
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    /* PACKAGES GRID */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .card {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .card-body {
-      padding: 1rem;
-    }
-
-    .card-body h3 {
-      color: #008080;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-price {
-      font-weight: bold;
-      color: #ff7f50;
-      margin-top: 0.5rem;
-    }
-
-    /* TABLE STYLING */
-    .table-container {
-      overflow-x: auto;
-      margin-bottom: 3rem;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-    }
-
-    th, td {
-      padding: 0.75rem 1rem;
-      border: 1px solid #ddd;
-      text-align: left;
-    }
-
-    th {
-      background-color: #008080;
-      color: white;
-    }
-
-    /* ATTRACTIONS LIST */
-    .attraction-list {
-      background: white;
-      padding: 1.5rem 2.5rem;
-      border-radius: 8px;
-      margin-bottom: 3rem;
-    }
-
-    .attraction-list li {
-      margin-bottom: 0.5rem;
-    }
-
-    /* GALLERY */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .gallery-grid img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-
-    /* FORM STYLING */
-    .form-container {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      max-width: 600px;
-      margin: 0 auto;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      display: block;
-      margin-bottom: 0.3rem;
-      font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 0.75rem;
-      background-color: #ff7f50;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background-color: #e0663b;
-    }
-
-    /* MODAL STYLING */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 400px;
-      position: relative;
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
-
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background-color: #333;
-      color: white;
-      margin-top: 3rem;
-    }
-
-    /* RESPONSIVE DESIGN FOR MOBILE */
-    @media (max-width: 768px) {
-      .hamburger {
+      .nav-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0.8rem 1rem;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      /* --- LOGO (icon + two-line text) --- */
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        text-decoration: none;
+      }
+
+      .logo-graphic {
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+      }
+
+      .logo-text-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .logo-title {
+        font-family: 'Georgia', serif;
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #008080;
+        line-height: 1.1;
+        font-style: italic;
+      }
+
+      .logo-subtitle {
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #008080;
+        font-weight: 600;
       }
 
       .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background-color: #ffffff;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        padding: 1rem;
-        gap: 1rem;
+        display: flex;
+        list-style: none;
+        gap: 1.5rem;
+        align-items: center;
       }
 
-      .nav-links.active {
-        display: flex;
+      .nav-links a, .mega-btn {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        background: none;
+        border: none;
+        font-size: 1rem;
+        cursor: pointer;
+        padding: 0.5rem 0;
+      }
+
+      .nav-links a:hover, .mega-btn:hover {
+        color: #008080;
+      }
+
+      /* --- "Contact Us" mega menu dropdown --- */
+      .mega-menu-item {
+        position: relative;
       }
 
       .mega-dropdown {
-        position: static;
-        width: 100%;
-        box-shadow: none;
-        grid-template-columns: 1fr;
-        padding: 0.5rem 0;
+        display: none; /* toggled to "grid" via JS/hover */
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 450px;
+        background: #ffffff;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        padding: 1.5rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        z-index: 1001;
       }
-    }
-  </style>
-</head>
-<body>
 
-  <header>
-    <nav class="nav-container">
-      <div class="logo">Wanderlust Escapes</div>
-      
-      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+      /* Show on hover (desktop) OR when JS adds the "active" class (mobile tap) */
+      .mega-menu-item:hover .mega-dropdown,
+      .mega-dropdown.active {
+        display: grid;
+      }
 
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#destinations">Destinations</a></li>
-        <li><a href="#packages">Packages</a></li>
-        <li><a href="#itineraries">Itineraries</a></li>
-        <li><a href="#gallery">Gallery</a></li>
-        
-        <!-- MEGA MENU ITEM -->
-        <li class="mega-menu-item">
-          <button class="mega-btn" id="megaBtn">Contact Us ▾</button>
-          <div class="mega-dropdown" id="megaDropdown">
-            <div class="mega-column">
-              <h4>Direct Support</h4>
+      .mega-column h4 {
+        color: #008080;
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.2rem;
+      }
+
+      .mega-column ul {
+        list-style: none;
+      }
+
+      .mega-column ul li {
+        margin-bottom: 0.4rem;
+      }
+
+      .mega-column ul li a {
+        font-weight: normal;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .mega-column ul li a:hover {
+        color: #ff7f50;
+      }
+
+      /* --- Hamburger icon (mobile nav toggle) --- */
+      .hamburger {
+        display: none; /* only shown on small screens, see media query below */
+        flex-direction: column;
+        justify-content: space-between;
+        width: 25px;
+        height: 18px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+      }
+
+      .hamburger span {
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-login-nav {
+        background-color: #008080 !important;
+        color: white !important;
+        padding: 0.4rem 1rem !important;
+        border-radius: 4px;
+      }
+
+      .btn-login-nav:hover {
+        background-color: #006666 !important;
+      }
+
+      /* ===== HERO BANNER ===== */
+      .hero {
+        background: #008080;
+        color: white;
+        text-align: center;
+        padding: 4rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .hero p {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* ===== ABOUT SECTION ===== */
+      .about-section {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        margin-bottom: 3rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      }
+
+      .about-section p {
+        margin-bottom: 1rem;
+      }
+
+      /* ===== PACKAGES GRID (responsive auto-fit cards) ===== */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+
+      .card {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px); /* subtle lift effect on hover */
+      }
+
+      .card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        padding: 1rem;
+      }
+
+      .card-body h3 {
+        color: #008080;
+        margin-bottom: 0.5rem;
+      }
+
+      /* Price breakdown (Budget / Standard / Luxury) shown inside each card */
+      .price-tiers {
+        margin-top: 0.8rem;
+        font-size: 0.88rem;
+        border-top: 1px dashed #ddd;
+        padding-top: 0.5rem;
+      }
+
+      .price-tier-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.2rem;
+      }
+
+      .price-tier-item span {
+        font-weight: bold;
+        color: #ff7f50;
+      }
+
+      /* ===== PROMO VIDEO SECTION ===== */
+      .video-container {
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .video-wrapper {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        background: #000;
+      }
+
+      .video-wrapper video {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      /* ===== SAMPLE ITINERARY TABLE ===== */
+      .table-container {
+        overflow-x: auto; /* allows horizontal scroll on small screens */
+        margin-bottom: 3rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+
+      th, td {
+        padding: 0.75rem 1rem;
+        border: 1px solid #ddd;
+        text-align: left;
+      }
+
+      th {
+        background-color: #008080;
+        color: white;
+      }
+
+      /* ===== KEY ATTRACTIONS LIST ===== */
+      .attraction-list {
+        background: white;
+        padding: 1.5rem 2.5rem;
+        border-radius: 8px;
+        margin-bottom: 3rem;
+      }
+
+      .attraction-list li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* ===== PHOTO GALLERY GRID ===== */
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1.2rem;
+        margin-bottom: 3rem;
+      }
+
+      .gallery-item {
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        background: #fff;
+        cursor: pointer; /* clicking opens the lightbox modal */
+      }
+
+      .gallery-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+
+      .gallery-item:hover img {
+        transform: scale(1.06); /* slight zoom-in on hover */
+      }
+
+      .gallery-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.7));
+        color: #fff;
+        padding: 0.8rem 0.5rem 0.4rem;
+        font-size: 0.85rem;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      /* ===== CONTACT / BOOKING FORM SECTION ===== */
+      .contact-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      .contact-info h3 {
+        color: #008080;
+        margin-bottom: 1rem;
+      }
+
+      .contact-info p {
+        margin-bottom: 1rem;
+        color: #555;
+      }
+
+      .info-details {
+        list-style: none;
+        margin-top: 1rem;
+      }
+
+      .info-details li {
+        margin-bottom: 0.8rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.3rem;
+        font-weight: bold;
+      }
+
+      .form-group input,
+      .form-group select,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #ff7f50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #e0663b;
+      }
+
+      /* ===== LOGIN MODAL (popup) ===== */
+      .modal {
+        display: none; /* toggled to "flex" via JS when opened */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 2000;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* ===== GALLERY LIGHTBOX MODAL (expanded image view) ===== */
+      .gallery-modal-content {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        position: relative;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .gallery-modal-content img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+      }
+
+      .gallery-modal-content h3 {
+        color: #008080;
+        margin-bottom: 0.5rem;
+      }
+
+      .gallery-modal-content p {
+        font-size: 0.95rem;
+        color: #444;
+        margin-bottom: 0.8rem;
+      }
+
+      .gallery-modal-content .wanderlust-note {
+        background-color: #e6f2f2;
+        border-left: 4px solid #008080;
+        padding: 0.8rem;
+        border-radius: 0 4px 4px 0;
+        font-size: 0.9rem;
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        text-align: center;
+        padding: 1.5rem;
+        background-color: #333;
+        color: white;
+        margin-top: 3rem;
+      }
+
+      /* ===== RESPONSIVE / MOBILE STYLES ===== */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex; /* show hamburger icon only on small screens */
+        }
+
+        .nav-links {
+          display: none; /* hidden until hamburger is tapped */
+          flex-direction: column;
+          width: 100%;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background-color: #ffffff;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          padding: 1rem;
+          gap: 1rem;
+        }
+
+        .nav-links.active {
+          display: flex; /* revealed via JS toggle */
+        }
+
+        .mega-dropdown {
+          position: static;
+          width: 100%;
+          box-shadow: none;
+          grid-template-columns: 1fr;
+          padding: 0.5rem 0;
+        }
+
+        .contact-wrapper {
+          grid-template-columns: 1fr; /* stack contact info + form on mobile */
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ===== HEADER / STICKY NAVIGATION ===== -->
+    <header>
+      <nav class="nav-container">
+        <!-- Brand logo: hand-drawn traveller + suitcase SVG icon plus text -->
+        <div class="logo">
+          <svg class="logo-graphic" viewBox="0 0 100 100">
+            <g fill="none" stroke="#008080" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M35 22 Q48 18 60 22" stroke-width="3"/>
+              <path d="M40 21 C40 15, 55 15, 55 21"/>
+              <circle cx="48" cy="27" r="5" fill="#008080"/>
+              <circle cx="56" cy="28" r="3.5" fill="#008080"/>
+              <path d="M43 32 L36 55 L58 55 L52 32 Z"/>
+              <path d="M38 38 L30 52 C28 54, 30 57, 34 56 L42 52" fill="white"/>
+              <path d="M30 38 Q25 45 31 52"/>
+              <path d="M40 55 L22 75 L30 77 L46 58" fill="#008080"/>
+              <path d="M48 55 L60 73 L66 71 L54 55" fill="#008080"/>
+              <path d="M22 75 L16 77 M60 73 L64 76" stroke-width="4"/>
+              <path d="M50 42 L72 62"/>
+              <path d="M72 62 L81 70" stroke-width="4"/>
+              <rect x="76" y="66" width="18" height="22" rx="4" transform="rotate(-30 85 77)"/>
+              <path d="M75 73 L88 65" transform="rotate(-30 85 77)"/>
+              <circle cx="82" cy="92" r="2" fill="#008080"/>
+              <circle cx="92" cy="86" r="2" fill="#008080"/>
+            </g>
+          </svg>
+          <div class="logo-text-group">
+            <span class="logo-title">Wanderlust Escapes</span>
+            <span class="logo-subtitle">TOUR AND TRAVEL</span>
+          </div>
+        </div>
+
+        <!-- Hamburger button: only visible on mobile, toggles .nav-links -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <!-- Main nav links -->
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#about">About</a></li>
+          <li><a href="#destinations">Destinations</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#itineraries">Itineraries</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+
+          <!-- "Contact Us" mega menu: shows on hover (desktop) / tap (mobile) -->
+          <li class="mega-menu-item">
+            <button class="mega-btn" id="megaBtn">Contact Us ▾</button>
+            <div class="mega-dropdown" id="megaDropdown">
+              <div class="mega-column">
+                <h4>Direct Support</h4>
+                <ul>
+                  <li><a href="#contact">📝 Booking Inquiry — Fill our online form</a></li>
+                  <li><a href="tel:+919876543210">📞 Customer Care — +91 8310730475</a></li>
+                  <li><a href="mailto:support@wanderlustescapes.in">✉️ Email Helpdesk — kollurohanthkumar@gmail.com</a></li>
+                  <li style="font-weight: normal; font-size: 0.85rem; color: #777; margin-top: 0.4rem;">
+                    🏢 Regd. Office: RV College of Engineering, Pattanegere, Bengaluru, Karnataka 560103, India
+                  </li>
+                  <li style="font-weight: normal; font-size: 0.8rem; color: #999;">
+                    Support hours: Mon–Sat, 9:00 AM – 7:00 PM IST
+                  </li>
+                </ul>
+              </div>
+              <div class="mega-column">
+                <h4>Our Team</h4>
               <ul>
-                <li><a href="#contact">Booking Inquiry</a></li>
-                <li><a href="#">📞 Customer Care</a></li>
-                <li><a href="#">✉️ Email Helpdesk</a></li>
+                <li><a href="https://github.com/rohini311018/travelproject/tree/main"> Rohini Ray</a></li>
+                <li><a href="https://github.com/saicr-07/project/tree/main"> Saicharan R</a></li>
+                <li><a href="https://github.com/rohanth-kumar/Fearless/tree/main"> Rohanth Kumar Kollu</a></li>
               </ul>
+              </div>
             </div>
-            <div class="mega-column">
-              <h4>Global Offices</h4>
-              <ul>
-                <li><a href="#contact">📍 New York HQ</a></li>
-                <li><a href="#contact">📍 London Hub</a></li>
-                <li><a href="#contact">📍 Tokyo Desk</a></li>
-              </ul>
+          </li>
+
+          <li><a href="#" class="btn-login-nav" id="loginBtn">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ===== HERO BANNER ===== -->
+    <section class="hero">
+      <h1>Explore the World With Us</h1>
+      <p>Handcrafted travel itineraries, seamless booking, and unforgettable global experiences tailored to every budget.</p>
+    </section>
+
+    <main class="container">
+
+      <!-- ===== ABOUT US ===== -->
+      <section id="about" class="about-section">
+        <h2 class="section-title">Why Travel With Wanderlust Escapes?</h2>
+        <p>At Wanderlust Escapes, we believe that traveling is more than just visiting a new place—it is about creating lifelong memories, experiencing unique cultures, and finding personal inspiration. Founded in 2026, our team of travel specialists curate fully customized tour packages for solo travelers, couples, and families alike.</p>
+        <p>Whether you are seeking a relaxed getaway on a tropical beach, an action-packed mountain hike, or a rich cultural tour through historic cities, we handle every detail of your journey—from premium lodging and transit to private guided tours.</p>
+      </section>
+
+      <!-- ===== PROMO VIDEO ===== -->
+      <section class="video-container">
+        <h2 class="section-title">Experience the Adventure</h2>
+        <div class="video-wrapper">
+          <video controls poster="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800" width="100%" height="auto">
+            <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+        </div>
+      </section>
+
+      <!-- ===== PACKAGE CARDS (prices shown in INR ₹) ===== -->
+      <section id="packages">
+        <h2 class="section-title">Popular Travel Packages</h2>
+        <div class="grid">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=500" alt="Bali">
+            <div class="card-body">
+              <h3>Bali Tropical Retreat</h3>
+              <p>7 Days of luxury resorts, beach tours, and cultural temples.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹70,500</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹99,600</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹1,74,300</span></div>
+              </div>
             </div>
           </div>
-        </li>
 
-        <li><a href="#" class="btn-login-nav" id="loginBtn">Login</a></li>
-      </ul>
-    </nav>
-  </header>
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=500" alt="Swiss Alps">
+            <div class="card-body">
+              <h3>Swiss Alps Adventure</h3>
+              <p>5 Days of scenic mountain hiking, skiing, and cabin stays.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹1,07,900</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,49,400</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,40,700</span></div>
+              </div>
+            </div>
+          </div>
 
-  <section class="hero">
-    <h1>Explore the World With Us</h1>
-    <p>Discover amazing places at affordable package rates.</p>
-  </section>
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=500" alt="Tokyo">
+            <div class="card-body">
+              <h3>Tokyo Cultural Tour</h3>
+              <p>6 Days exploring modern tech hubs, historic shrines, and cuisine.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹87,200</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,24,500</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹1,99,200</span></div>
+              </div>
+            </div>
+          </div>
 
-  <main class="container">
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500" alt="Paris">
+            <div class="card-body">
+              <h3>Parisian Romance & Art</h3>
+              <p>5 Days touring museums, Eiffel Tower, and French cafes.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹91,300</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,32,800</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,24,100</span></div>
+              </div>
+            </div>
+          </div>
 
-    <section id="packages">
-      <h2 class="section-title">Popular Travel Packages</h2>
-      <div class="grid">
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=500" alt="Bali">
-          <div class="card-body">
-            <h3>Bali Tropical Retreat</h3>
-            <p>7 Days of luxury resorts, beach tours, and cultural temples.</p>
-            <div class="card-price">$1,200 / person</div>
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500" alt="Dubai">
+            <div class="card-body">
+              <h3>Dubai Desert & Luxury</h3>
+              <p>5 Days of futuristic skyscrapers, desert safaris, and luxury shopping.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹78,800</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,20,400</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,15,800</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=500" alt="Venice">
+            <div class="card-body">
+              <h3>Venice Canal Magic</h3>
+              <p>4 Days of romantic gondola rides, historic bridges, and Italian cuisine.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹91,300</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,32,800</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,24,100</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=500" alt="Rome">
+            <div class="card-body">
+              <h3>Rome Ancient Marvels</h3>
+              <p>6 Days walking through imperial ruins, Vatican museums, and plazas.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹83,000</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,28,700</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,07,500</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=500" alt="Sydney">
+            <div class="card-body">
+              <h3>Sydney Ocean Explorer</h3>
+              <p>7 Days enjoying harbour cruises, Bondi beaches, and national parks.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹1,03,800</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,45,300</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,44,900</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500" alt="Kyoto">
+            <div class="card-body">
+              <h3>Kyoto Zen Heritage</h3>
+              <p>5 Days touring bamboo forests, traditional tea houses, and shrines.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹81,300</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,17,900</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹1,90,900</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=500" alt="Santorini">
+            <div class="card-body">
+              <h3>Santorini Sunset Escape</h3>
+              <p>5 Days of iconic whitewashed villas, Aegean views, and wine tasting.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹99,600</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,41,100</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹2,32,400</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500" alt="Cinque Terre">
+            <div class="card-body">
+              <h3>Cinque Terre Coastal Hike</h3>
+              <p>4 Days hiking scenic cliff paths between colorful Italian villages.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹76,400</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,14,500</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹1,86,800</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=500" alt="Grand Canyon">
+            <div class="card-body">
+              <h3>Grand Canyon Expedition</h3>
+              <p>4 Days of canyon trekking, helicopter tours, and stargazing camps.</p>
+              <div class="price-tiers">
+                <div class="price-tier-item">Budget Tier: <span>₹73,900</span></div>
+                <div class="price-tier-item">Standard Tier: <span>₹1,09,600</span></div>
+                <div class="price-tier-item">Luxury Tier: <span>₹1,78,500</span></div>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1530122037265-a5f1f91d3b99?w=500" alt="Swiss Alps">
-          <div class="card-body">
-            <h3>Swiss Alps Adventure</h3>
-            <p>5 Days of scenic mountain hiking, skiing, and cabin stays.</p>
-            <div class="card-price">$1,800 / person</div>
+      <!-- ===== SAMPLE 3-DAY ITINERARY TABLE ===== -->
+      <section id="itineraries">
+        <h2 class="section-title">3-Day Sample Itinerary (Bali Retreat)</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Morning Activity</th>
+                <th>Afternoon Activity</th>
+                <th>Evening Activity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Day 1</td>
+                <td>Airport Pickup & Hotel Check-in</td>
+                <td>Guided City Walking Tour</td>
+                <td>Welcome Dinner</td>
+              </tr>
+              <tr>
+                <td>Day 2</td>
+                <td>Historical Landmark Tour</td>
+                <td>Museum & Local Shopping</td>
+                <td>Cultural Dance Show</td>
+              </tr>
+              <tr>
+                <td>Day 3</td>
+                <td>Nature Trail Hike</td>
+                <td>Souvenir Market Visit</td>
+                <td>Departure Transfer</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== KEY ATTRACTIONS ===== -->
+      <section id="destinations">
+        <h2 class="section-title">Top Key Attractions</h2>
+        <ul class="attraction-list">
+          <li><strong>Historical Monuments:</strong> UNESCO World Heritage sites, ancient temples, and architectural marvels with certified local historians.</li>
+          <li><strong>Natural Wonders:</strong> Scenic mountain peaks, tropical beaches, pristine coral reefs, and protected national parks.</li>
+          <li><strong>Local Experiences:</strong> Authentic street food tours, traditional artisan crafts, private cooking classes, and live music performances.</li>
+        </ul>
+      </section>
+
+      <!-- ===== PHOTO GALLERY (each item opens a lightbox modal with extra info via data-* attributes) ===== -->
+      <section id="gallery">
+        <h2 class="section-title">Photo Gallery (Click to Expand)</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item"
+              data-title="Tropical Paradise (Bali)"
+              data-desc="Known for its lush landscapes, serene beaches, and rich spiritual heritage, Bali is a premier tropical destination in Southeast Asia."
+              data-relation="Our flagship 'Bali Tropical Retreat' package gives you direct access to beachfront luxury villas, private temple tours, and spa treatments.">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500" alt="Tropical Beach">
+            <div class="gallery-caption">Tropical Paradise</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Swiss Alpine Lake"
+              data-desc="Nestled in the central Alps, Switzerland's alpine lakes feature crystal-clear waters framed by dramatic snow-capped peaks."
+              data-relation="Included in the 'Swiss Alps Adventure' package, Wanderlust Escapes offers guided hikes around lake districts along with scenic mountain rail tickets.">
+            <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=500" alt="Alpine Mountain Lake">
+            <div class="gallery-caption">Swiss Alpine Lake</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Coastal Sunset"
+              data-desc="Spectacular ocean sunsets offer peaceful moments for travelers across coastlines worldwide."
+              data-relation="Wanderlust Escapes organizes private sunset catamaran cruises across multiple beach package destinations.">
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=500" alt="Sunset Ocean View">
+            <div class="gallery-caption">Coastal Sunset</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Eiffel Tower, Paris"
+              data-desc="Standing tall over the Champ de Mars, the Eiffel Tower is a globally recognized emblem of romance, art, and French culture."
+              data-relation="Part of our 'Parisian Romance & Art' package, including skip-the-line elevator access to the top deck and evening champagne cruises.">
+            <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=500" alt="Eiffel Tower Paris">
+            <div class="gallery-caption">Eiffel Tower, Paris</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Dubai Skyline"
+              data-desc="A spectacular metropolis rising from the desert, renowned for world-record architecture and vibrant urban lifestyle."
+              data-relation="Explore Dubai via our 'Dubai Desert & Luxury' package featuring VIP visits to Burj Khalifa and private 4x4 dune bashing tours.">
+            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500" alt="Dubai Skyline">
+            <div class="gallery-caption">Dubai Skyline</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Venice Canals"
+              data-desc="Built on more than 100 small islands in a lagoon in the Adriatic Sea, Venice features canals lined with Renaissance and Gothic palaces."
+              data-relation="Book the 'Venice Canal Magic' tour with Wanderlust Escapes to enjoy private gondola rides and artisan glassblowing workshops on Murano island.">
+            <img src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=500" alt="Venice Canals">
+            <div class="gallery-caption">Venice Canals</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Colosseum, Rome"
+              data-desc="The iconic amphitheater built in the heart of Rome stands as a testament to ancient Roman engineering and gladiatorial history."
+              data-relation="Our 'Rome Ancient Marvels' package unlocks exclusive underground access tours to the Colosseum lead by certified archaeological historians.">
+            <img src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=500" alt="Rome Colosseum">
+            <div class="gallery-caption">Colosseum, Rome</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Sydney Harbour"
+              data-desc="Home to the famous Sydney Opera House and Harbour Bridge, Sydney offers breathtaking harbor views paired with coastal culture."
+              data-relation="Offered in our 'Sydney Ocean Explorer' package, complete with private harbour yacht charters and surf lessons at Bondi Beach.">
+            <img src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=500" alt="Sydney Opera House">
+            <div class="gallery-caption">Sydney Harbour</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Kyoto Bamboo Grove"
+              data-desc="Located in Arashiyama, walking through towering green bamboo stalks creates an ethereal, tranquil atmosphere unique to Kyoto."
+              data-relation="Featured in our 'Kyoto Zen Heritage' package, complete with early-morning crowd-free guided walks and traditional tea ceremonies.">
+            <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500" alt="Kyoto Bamboo Forest">
+            <div class="gallery-caption">Kyoto Bamboo Grove</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Santorini, Greece"
+              data-desc="Famed for blue-domed churches and white cliffside villages overlooking the sparkling caldera in the Aegean Sea."
+              data-relation="Experience Santorini through our sunset luxury villa bookings and private wine tasting tours in our 'Santorini Sunset Escape'.">
+            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=500" alt="Santorini White Houses">
+            <div class="gallery-caption">Santorini, Greece</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Cinque Terre Coast"
+              data-desc="A string of five centuries-old seaside villages on the rugged Italian Riviera coastline surrounded by steep terraces and vineyards."
+              data-relation="Covered in our 'Cinque Terre Coastal Hike' package with baggage transfers between village hotels and regional train passes included.">
+            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?w=500" alt="Cinque Terre Italy">
+            <div class="gallery-caption">Cinque Terre Coast</div>
+          </div>
+
+          <div class="gallery-item"
+              data-title="Grand Canyon View"
+              data-desc="A massive geological formation in Arizona sculpted over millions of years by the Colorado River, showcasing layered red rock formations."
+              data-relation="Our 'Grand Canyon Expedition' package provides helicopter flyovers, guided rim walks, and luxury desert glamping setups.">
+            <img src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=500" alt="Grand Canyon">
+            <div class="gallery-caption">Grand Canyon View</div>
           </div>
         </div>
+      </section>
 
-        <div class="card">
-          <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=500" alt="Tokyo">
-          <div class="card-body">
-            <h3>Tokyo Cultural Tour</h3>
-            <p>6 Days exploring modern tech hubs, historic shrines, and cuisine.</p>
-            <div class="card-price">$1,500 / person</div>
-          </div>
+      <!-- ===== BOOKING / CONTACT FORM (prices in INR, matches JS priceMap below) ===== -->
+      <section id="contact">
+        <h2 class="section-title">Book Your Trip / Contact Us</h2>
+
+        <div class="form-container">
+          <form id="bookingForm" action="#" method="POST">
+            <div class="form-group">
+              <label for="fullName">Full Name:</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address:</label>
+              <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="packageSelect">Select Destination & Tier:</label>
+              <select id="packageSelect" name="packageSelect" required>
+                <option value="">-- Choose Option --</option>
+                <optgroup label="Bali Tropical Retreat">
+                  <option value="bali-budget">Bali - Budget Tier (₹70,500)</option>
+                  <option value="bali-standard">Bali - Standard Tier (₹99,600)</option>
+                  <option value="bali-luxury">Bali - Luxury Tier (₹1,74,300)</option>
+                </optgroup>
+                <optgroup label="Swiss Alps Adventure">
+                  <option value="swiss-budget">Swiss Alps - Budget Tier (₹1,07,900)</option>
+                  <option value="swiss-standard">Swiss Alps - Standard Tier (₹1,49,400)</option>
+                  <option value="swiss-luxury">Swiss Alps - Luxury Tier (₹2,40,700)</option>
+                </optgroup>
+                <optgroup label="Tokyo Cultural Tour">
+                  <option value="tokyo-budget">Tokyo - Budget Tier (₹87,200)</option>
+                  <option value="tokyo-standard">Tokyo - Standard Tier (₹1,24,500)</option>
+                  <option value="tokyo-luxury">Tokyo - Luxury Tier (₹1,99,200)</option>
+                </optgroup>
+                <optgroup label="Dubai Desert & Luxury">
+                  <option value="dubai-budget">Dubai - Budget Tier (₹78,800)</option>
+                  <option value="dubai-standard">Dubai - Standard Tier (₹1,20,400)</option>
+                  <option value="dubai-luxury">Dubai - Luxury Tier (₹2,15,800)</option>
+                </optgroup>
+                <optgroup label="Venice Canal Magic">
+                  <option value="venice-budget">Venice - Budget Tier (₹91,300)</option>
+                  <option value="venice-standard">Venice - Standard Tier (₹1,32,800)</option>
+                  <option value="venice-luxury">Venice - Luxury Tier (₹2,24,100)</option>
+                </optgroup>
+                <optgroup label="Rome Ancient Marvels">
+                  <option value="rome-budget">Rome - Budget Tier (₹83,000)</option>
+                  <option value="rome-standard">Rome - Standard Tier (₹1,28,700)</option>
+                  <option value="rome-luxury">Rome - Luxury Tier (₹2,07,500)</option>
+                </optgroup>
+                <optgroup label="Sydney Ocean Explorer">
+                  <option value="sydney-budget">Sydney - Budget Tier (₹1,03,800)</option>
+                  <option value="sydney-standard">Sydney - Standard Tier (₹1,45,300)</option>
+                  <option value="sydney-luxury">Sydney - Luxury Tier (₹2,44,900)</option>
+                </optgroup>
+                <optgroup label="Kyoto Zen Heritage">
+                  <option value="kyoto-budget">Kyoto - Budget Tier (₹81,300)</option>
+                  <option value="kyoto-standard">Kyoto - Standard Tier (₹1,17,900)</option>
+                  <option value="kyoto-luxury">Kyoto - Luxury Tier (₹1,90,900)</option>
+                </optgroup>
+                <optgroup label="Santorini Sunset Escape">
+                  <option value="santorini-budget">Santorini - Budget Tier (₹99,600)</option>
+                  <option value="santorini-standard">Santorini - Standard Tier (₹1,41,100)</option>
+                  <option value="santorini-luxury">Santorini - Luxury Tier (₹2,32,400)</option>
+                </optgroup>
+                <optgroup label="Cinque Terre Coastal Hike">
+                  <option value="cinque-budget">Cinque Terre - Budget Tier (₹76,400)</option>
+                  <option value="cinque-standard">Cinque Terre - Standard Tier (₹1,14,500)</option>
+                  <option value="cinque-luxury">Cinque Terre - Luxury Tier (₹1,86,800)</option>
+                </optgroup>
+                <optgroup label="Grand Canyon Expedition">
+                  <option value="canyon-budget">Grand Canyon - Budget Tier (₹73,900)</option>
+                  <option value="canyon-standard">Grand Canyon - Standard Tier (₹1,09,600)</option>
+                  <option value="canyon-luxury">Grand Canyon - Luxury Tier (₹1,78,500)</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="travelers">Number of Travelers:</label>
+              <input type="number" id="travelers" name="travelers" min="1" max="10" value="1" required>
+            </div>
+
+            <div class="form-group">
+              <label for="comments">Special Requests:</label>
+              <textarea id="comments" name="comments" rows="4" placeholder="Any dietary preferences, accessibility needs, or extra requests..."></textarea>
+            </div>
+
+            <button type="submit" class="btn">Submit Booking Request</button>
+          </form>
         </div>
-      </div>
-    </section>
 
-    <section id="itineraries">
-      <h2 class="section-title">3-Day Itinerary for Bali Tropical Retreat</h2>
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Day</th>
-              <th>Morning Activity</th>
-              <th>Afternoon Activity</th>
-              <th>Evening Activity</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Day 1</td>
-              <td>Airport Pickup & Hotel Check-in</td>
-              <td>Guided City Walking Tour</td>
-              <td>Welcome Dinner</td>
-            </tr>
-            <tr>
-              <td>Day 2</td>
-              <td>Historical Landmark Tour</td>
-              <td>Museum & Local Shopping</td>
-              <td>Cultural Dance Show</td>
-            </tr>
-            <tr>
-              <td>Day 3</td>
-              <td>Nature Trail Hike</td>
-              <td>Souvenir Market Visit</td>
-              <td>Departure Transfer</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+      </section>
 
-    <section id="destinations">
-      <h2 class="section-title">Top Key Attractions</h2>
-      <ul class="attraction-list">
-        <li><strong>Historical Monuments:</strong> UNESCO World Heritage sites and ancient temples.</li>
-        <li><strong>Natural Wonders:</strong> Scenic mountain peaks, tropical beaches, and national parks.</li>
-        <li><strong>Local Experiences:</strong> Authentic street food tours, traditional crafts, and music.</li>
-      </ul>
-    </section>
+    </main>
 
-    <section id="gallery">
-      <h2 class="section-title">Photo Gallery</h2>
-      <div class="gallery-grid">
-        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400" alt="Beach">
-        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=400" alt="Mountains">
-        <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400" alt="Ocean">
-      </div>
-    </section>
-
-    <section id="contact">
-      <h2 class="section-title">Book Your Trip / Contact Us</h2>
-      <div class="form-container">
-        <form id="bookingForm" action="#" method="POST">
+    <!-- ===== LOGIN MODAL (hidden by default, opened by #loginBtn) ===== -->
+    <div class="modal" id="loginModal">
+      <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <h3 style="color:#008080; margin-bottom: 1rem;">User Login</h3>
+        <form id="loginForm">
           <div class="form-group">
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            <label for="loginEmail">Email:</label>
+            <input type="email" id="loginEmail" required>
           </div>
-
           <div class="form-group">
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <label for="loginPass">Password:</label>
+            <input type="password" id="loginPass" required>
           </div>
-
-          <div class="form-group">
-            <label for="packageSelect">Select Package:</label>
-            <select id="packageSelect" name="packageSelect" required>
-              <option value="">-- Choose a Destination --</option>
-              <option value="bali">Bali Tropical Retreat ($1,200)</option>
-              <option value="swiss">Swiss Alps Adventure ($1,800)</option>
-              <option value="tokyo">Tokyo Cultural Tour ($1,500)</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="travelers">Number of Travelers:</label>
-            <input type="number" id="travelers" name="travelers" min="1" max="10" value="1" required>
-          </div>
-
-          <div class="form-group">
-            <label for="comments">Special Requests:</label>
-            <textarea id="comments" name="comments" rows="4" placeholder="Any additional requirements..."></textarea>
-          </div>
-
-          <button type="submit" class="btn">Submit Booking Request</button>
+          <button type="submit" class="btn">Log In</button>
         </form>
       </div>
-    </section>
-
-  </main>
-
-  <!-- LOGIN MODAL -->
-  <div class="modal" id="loginModal">
-    <div class="modal-content">
-      <span class="close-modal" id="closeModal">&times;</span>
-      <h3 style="color:#008080; margin-bottom: 1rem;">User Login</h3>
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="loginEmail">Email:</label>
-          <input type="email" id="loginEmail" required>
-        </div>
-        <div class="form-group">
-          <label for="loginPass">Password:</label>
-          <input type="password" id="loginPass" required>
-        </div>
-        <button type="submit" class="btn">Log In</button>
-      </form>
     </div>
-  </div>
 
-  <footer>
-    <p>&copy; 2026 Wanderlust Escapes. All Rights Reserved.</p>
-  </footer>
+    <!-- ===== GALLERY LIGHTBOX MODAL (hidden by default, opened by clicking a .gallery-item) ===== -->
+    <div class="modal" id="galleryModal">
+      <div class="gallery-modal-content">
+        <span class="close-modal" id="closeGalleryModal">&times;</span>
+        <img id="galleryModalImg" src="" alt="Expanded View">
+        <h3 id="galleryModalTitle"></h3>
+        <p id="galleryModalDesc"></p>
+        <div class="wanderlust-note">
+          <strong>Wanderlust Experience:</strong> <span id="galleryModalRelation"></span>
+        </div>
+      </div>
+    </div>
 
-  <script>
-    // Mobile Hamburger Menu Toggle
-    const hamburgerBtn = id('hamburgerBtn');
-    const navLinks = id('navLinks');
+    <footer>
+      <p>&copy; 2026 Wanderlust Escapes. All Rights Reserved.</p>
+    </footer>
 
-    hamburgerBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+    <script>
+      /* -----------------------------------------------------------
+        PRICE LOOKUP TABLE
+        Maps every <option value="..."> from the booking <select>
+        to a human-readable label + its INR price, so the booking
+        confirmation alert can show the traveler exactly what
+        they're paying (see the "bookingForm" submit handler below).
+      ----------------------------------------------------------- */
+      // NOTE: "price" here is the PER-PERSON price as a plain number (no ₹ or commas)
+      // so it's easy to multiply by the number of travelers. It gets formatted into
+      // proper Indian-style currency (₹1,74,300) only when it's displayed — see the
+      // formatINR() helper and the bookingForm submit handler below.
+      const packagePrices = {
+        "bali-budget":      { label: "Bali - Budget Tier",              price: 70500 },
+        "bali-standard":    { label: "Bali - Standard Tier",            price: 99600 },
+        "bali-luxury":      { label: "Bali - Luxury Tier",              price: 174300 },
 
-    // Mega Menu Toggle for Touch Devices
-    const megaBtn = id('megaBtn');
-    const megaDropdown = id('megaDropdown');
+        "swiss-budget":     { label: "Swiss Alps - Budget Tier",        price: 107900 },
+        "swiss-standard":   { label: "Swiss Alps - Standard Tier",      price: 149400 },
+        "swiss-luxury":     { label: "Swiss Alps - Luxury Tier",        price: 240700 },
 
-    megaBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      megaDropdown.classList.toggle('active');
-    });
+        "tokyo-budget":     { label: "Tokyo - Budget Tier",             price: 87200 },
+        "tokyo-standard":   { label: "Tokyo - Standard Tier",           price: 124500 },
+        "tokyo-luxury":     { label: "Tokyo - Luxury Tier",             price: 199200 },
 
-    document.addEventListener('click', () => {
-      megaDropdown.classList.remove('active');
-    });
+        "dubai-budget":     { label: "Dubai - Budget Tier",             price: 78800 },
+        "dubai-standard":   { label: "Dubai - Standard Tier",           price: 120400 },
+        "dubai-luxury":     { label: "Dubai - Luxury Tier",             price: 215800 },
 
-    // Login Modal Handlers
-    const loginModal = id('loginModal');
-    const loginBtn = id('loginBtn');
-    const closeModal = id('closeModal');
+        "venice-budget":    { label: "Venice - Budget Tier",            price: 91300 },
+        "venice-standard":  { label: "Venice - Standard Tier",          price: 132800 },
+        "venice-luxury":    { label: "Venice - Luxury Tier",            price: 224100 },
 
-    loginBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      loginModal.style.display = 'flex';
-    });
+        "rome-budget":      { label: "Rome - Budget Tier",              price: 83000 },
+        "rome-standard":    { label: "Rome - Standard Tier",            price: 128700 },
+        "rome-luxury":      { label: "Rome - Luxury Tier",              price: 207500 },
 
-    closeModal.addEventListener('click', () => {
-      loginModal.style.display = 'none';
-    });
+        "sydney-budget":    { label: "Sydney - Budget Tier",            price: 103800 },
+        "sydney-standard":  { label: "Sydney - Standard Tier",          price: 145300 },
+        "sydney-luxury":    { label: "Sydney - Luxury Tier",            price: 244900 },
 
-    window.addEventListener('click', (e) => {
-      if (e.target === loginModal) {
-        loginModal.style.display = 'none';
+        "kyoto-budget":     { label: "Kyoto - Budget Tier",             price: 81300 },
+        "kyoto-standard":   { label: "Kyoto - Standard Tier",           price: 117900 },
+        "kyoto-luxury":     { label: "Kyoto - Luxury Tier",             price: 190900 },
+
+        "santorini-budget":   { label: "Santorini - Budget Tier",       price: 99600 },
+        "santorini-standard": { label: "Santorini - Standard Tier",     price: 141100 },
+        "santorini-luxury":   { label: "Santorini - Luxury Tier",       price: 232400 },
+
+        "cinque-budget":    { label: "Cinque Terre - Budget Tier",      price: 76400 },
+        "cinque-standard":  { label: "Cinque Terre - Standard Tier",    price: 114500 },
+        "cinque-luxury":    { label: "Cinque Terre - Luxury Tier",      price: 186800 },
+
+        "canyon-budget":    { label: "Grand Canyon - Budget Tier",      price: 73900 },
+        "canyon-standard":  { label: "Grand Canyon - Standard Tier",    price: 109600 },
+        "canyon-luxury":    { label: "Grand Canyon - Luxury Tier",      price: 178500 }
+      };
+
+      // Formats a plain number as Indian-style currency, e.g. 1743000 -> "₹17,43,000"
+      function formatINR(amount) {
+        return "₹" + amount.toLocaleString("en-IN");
       }
-    });
 
-    // Form Submissions
-    id('bookingForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = id('fullName').value;
-      const pkg = id('packageSelect').value;
-      alert(`Thank you, ${name}! Your booking request for the ${pkg.toUpperCase()} package has been received.`);
-      e.target.reset();
-    });
+      // Small helper so we don't keep typing document.getElementById()
+      function id(elemId) {
+        return document.getElementById(elemId);
+      }
 
-    id('loginForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = id('loginEmail').value;
-      alert(`Welcome back! Logged in as: ${email}`);
-      loginModal.style.display = 'none';
-      e.target.reset();
-    });
+      /* ----------------- MOBILE HAMBURGER MENU ----------------- */
+      const hamburgerBtn = id('hamburgerBtn');
+      const navLinks = id('navLinks');
 
-    function id(elemId) {
-      return document.getElementById(elemId);
-    }
-  </script>
+      hamburgerBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active'); // show/hide nav on small screens
+      });
 
-</body>
-</html>
+      /* ----------------- "CONTACT US" MEGA MENU ----------------- */
+      const megaBtn = id('megaBtn');
+      const megaDropdown = id('megaDropdown');
+
+      megaBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // don't let this click bubble up and instantly close the menu
+        megaDropdown.classList.toggle('active');
+      });
+
+      // Clicking anywhere else on the page closes the mega menu
+      document.addEventListener('click', () => {
+        megaDropdown.classList.remove('active');
+      });
+
+      /* ----------------- LOGIN MODAL ----------------- */
+      const loginModal = id('loginModal');
+      const loginBtn = id('loginBtn');
+      const closeModal = id('closeModal');
+
+      loginBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'flex';
+      });
+
+      closeModal.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+      });
+
+      /* ----------------- GALLERY LIGHTBOX MODAL ----------------- */
+      const galleryModal = id('galleryModal');
+      const closeGalleryModal = id('closeGalleryModal');
+
+      // Wire up every gallery thumbnail: reads its data-* attributes
+      // and fills the lightbox modal with that info before showing it.
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const imgSrc = item.querySelector('img').src;
+          const title = item.getAttribute('data-title');
+          const desc = item.getAttribute('data-desc');
+          const relation = item.getAttribute('data-relation');
+
+          id('galleryModalImg').src = imgSrc;
+          id('galleryModalTitle').textContent = title;
+          id('galleryModalDesc').textContent = desc;
+          id('galleryModalRelation').textContent = relation;
+
+          galleryModal.style.display = 'flex';
+        });
+      });
+
+      closeGalleryModal.addEventListener('click', () => {
+        galleryModal.style.display = 'none';
+      });
+
+      // Clicking the dark overlay (outside the modal box) closes either modal
+      window.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+          loginModal.style.display = 'none';
+        }
+        if (e.target === galleryModal) {
+          galleryModal.style.display = 'none';
+        }
+      });
+
+      /* ----------------- BOOKING FORM SUBMISSION -----------------
+        Looks up the selected package in packagePrices, then
+        multiplies the per-person price by the number of travelers
+        so the confirmation shows the price-per-person AND the
+        actual total cost for the whole group — not just a flat
+        per-person figure.
+      ------------------------------------------------------------ */
+      id('bookingForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = id('fullName').value;
+        const pkgValue = id('packageSelect').value;
+        const travelers = parseInt(id('travelers').value, 10) || 1; // guard against empty/invalid input
+
+        // Fall back gracefully in case somehow no valid option was picked
+        const pkgInfo = packagePrices[pkgValue] || { label: pkgValue.toUpperCase(), price: 0 };
+        const totalCost = pkgInfo.price * travelers;
+
+        alert(
+          `Thank you, ${name}! Your booking request for the [${pkgInfo.label}] package has been received.\n` +
+          `Travelers: ${travelers}\n` +
+          `Price per person: ${formatINR(pkgInfo.price)}\n` +
+          `Total Cost: ${formatINR(totalCost)}`
+        );
+        e.target.reset();
+      });
+
+      /* ----------------- LOGIN FORM SUBMISSION ----------------- */
+      id('loginForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = id('loginEmail').value;
+        alert(`Welcome back! Logged in as: ${email}`);
+        loginModal.style.display = 'none';
+        e.target.reset();
+      });
+    </script>
+
+  </body>
+  </html>
